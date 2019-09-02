@@ -1,0 +1,19 @@
+version: '3.2'
+
+services:
+  api-node:
+    build: ./docker/api-node/
+    image: nodemon:latest
+    environment:
+      - API_NODE_HOST=0.0.0.0
+      - API_NODE_PORT=3030
+    working_dir: /api
+    volumes:
+      - node_modules:/api/node_modules
+      - ./src:/api
+    ports:
+      - 3030:3030
+    command: bash -c "npm run start"
+
+volumes:
+  node_modules:
