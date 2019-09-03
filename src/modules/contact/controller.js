@@ -1,33 +1,52 @@
+const ContactModel = require('./model')
+
 const Contact = {
-    contacts: [
-        {
-            nome: 'Fulano',
-            email: 'fulano@localhost.com'
-        },
-        {
-            nome: 'Fulano 2',
-            email: 'fulano2@localhost.com'
-        }
-    ],
-        
-    find: (req, res, next) => {
-        res.json(Contact.contacts)
+    find: async (req, res, next) => {
+        let contacts = await ContactModel.find((err, contacts) => {
+            if (err) console.log(err)
+
+            return contacts
+        })
+
+        res.json(contacts)
     },
 
-    get: (req, res, next) => {
-        res.json(Contact.contacts[req.params.id])
+    get: async (req, res, next) => {
+        let contact = await ContactModel.findById(req.params.id, (err, contact) => {
+            if (err) console.log(err)
+
+            return contact
+        })
+
+        res.json(contact)
     },
 
-    post: (req, res, next) => {
-        res.json(Contact.contacts[req.params.id])
+    post: async (req, res, next) => {
+        let contact = new ContactModel(req.body)
+
+        res.json(await contact.save())
     },
 
-    put: (req, res, next) => {
-        res.json(Contact.contacts[req.params.id])
+    put: async (req, res, next) => {
+        let contact = await ContactModel.findById(req.params.id, async (err, contact) => {
+            if (err) console.log(err)
+
+            return contact
+        })
+
+        contact = await Object.assign(contact, req.body)
+            
+        res.json(await contact.save())
     },
 
-    delete: (req, res, next) => {
-        res.json(Contact.contacts[req.params.id])
+    delete: async (req, res, next) => {
+        let contact = await ContactModel.findByIdAndRemove(req.params.id, (err, contact) => {
+            if (err) console.log(err)
+
+            return contact
+        })
+
+        res.json(contact)
     }
 }
 

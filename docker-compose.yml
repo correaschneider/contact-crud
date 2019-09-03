@@ -5,15 +5,34 @@ services:
     build: ./docker/api-node/
     image: nodemon:latest
     environment:
-      - API_NODE_HOST=0.0.0.0
-      - API_NODE_PORT=3030
+      API_NODE_HOST: ${API_NODE_HOST}
+      API_NODE_PORT: ${API_NODE_PORT}
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
     working_dir: /api
     volumes:
       - node_modules:/api/node_modules
       - ./src:/api
     ports:
-      - 3030:3030
+      - ${API_NODE_PORT}:${API_NODE_PORT}
     command: bash -c "npm run start"
+
+  db-mongo:
+    image: mongo:4.2-bionic
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+      MONGO_USERDB_ADMIN_USERNAME: ${DB_USER}
+      MONGO_USERDB_ADMIN_PASSWORD: ${DB_PASS}
+    volumes:
+      - mongo_data:/data/db
+      - ./docker/db-mongo/initdb:/docker-entrypoint-initdb.d
 
 volumes:
   node_modules:
+  mongo_data:

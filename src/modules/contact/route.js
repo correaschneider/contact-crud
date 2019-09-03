@@ -6,7 +6,7 @@ const Contact = require('./controller')
 
 router.get('', Contact.find)
 router.get('/:id', Contact.get)
-router.post('/:id', Contact.post)
+router.post('', Contact.post)
 router.put('/:id', Contact.put)
 router.delete('/:id', Contact.delete)
 
