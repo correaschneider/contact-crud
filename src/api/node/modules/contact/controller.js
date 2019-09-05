@@ -12,7 +12,7 @@ const Contact = {
     },
 
     get: async (req, res, next) => {
-        let contact = await ContactModel.findById(req.params.id, (err, contact) => {
+        let contact = await ContactModel.findOne({_id: req.params.id}, (err, contact) => {
             if (err) console.log(err)
 
             return contact
@@ -28,7 +28,7 @@ const Contact = {
     },
 
     put: async (req, res, next) => {
-        let contact = await ContactModel.findById(req.params.id, async (err, contact) => {
+        let contact = await ContactModel.findOne({_id: req.params.id}, async (err, contact) => {
             if (err) console.log(err)
 
             return contact
@@ -40,7 +40,7 @@ const Contact = {
     },
 
     delete: async (req, res, next) => {
-        let contact = await ContactModel.findByIdAndRemove(req.params.id, (err, contact) => {
+        let contact = await ContactModel.findOneAndDelete({_id: req.params.id}, (err, contact) => {
             if (err) console.log(err)
 
             return contact
