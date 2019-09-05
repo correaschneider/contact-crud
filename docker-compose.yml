@@ -18,7 +18,7 @@ services:
       - ./src/api/node:/api
     ports:
       - ${API_NODE_PORT}:${API_NODE_PORT}
-    command: bash -c "npm run start"
+    command: bash -c "npm i; npm run start"
 
   db-mongo:
     image: mongo:4.2-bionic
