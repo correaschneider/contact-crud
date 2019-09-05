@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   api-node:
-    build: ./docker/api-node/
+    build: ./docker/api/node/
     image: nodemon:latest
     environment:
       API_NODE_HOST: ${API_NODE_HOST}
@@ -14,8 +14,8 @@ services:
       DB_PORT: ${DB_PORT}
     working_dir: /api
     volumes:
-      - node_modules:/api/node_modules
-      - ./src:/api
+      - api_node-node_modules:/api/node_modules
+      - ./src/api/node:/api
     ports:
       - ${API_NODE_PORT}:${API_NODE_PORT}
     command: bash -c "npm run start"
@@ -31,8 +31,22 @@ services:
       MONGO_USERDB_ADMIN_PASSWORD: ${DB_PASS}
     volumes:
       - mongo_data:/data/db
-      - ./docker/db-mongo/initdb:/docker-entrypoint-initdb.d
+      - ./docker/db/mongo/initdb:/docker-entrypoint-initdb.d
+
+  app-react:
+    build: ./docker/app/react/
+    image: app-react:latest
+    environment:
+      APP_REACT_HOST: ${APP_REACT_HOST}
+      APP_REACT_PORT: ${APP_REACT_PORT}
+    working_dir: /app
+    volumes:
+      - ./src/app/react:/app
+    ports:
+      - ${APP_REACT_PORT}:${APP_REACT_PORT}
+    command: bash -c "sleep 3600"
 
 volumes:
-  node_modules:
+  api_node-node_modules:
+  app_react-node_modules:
   mongo_data:
