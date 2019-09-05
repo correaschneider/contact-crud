@@ -37,14 +37,15 @@ services:
     build: ./docker/app/react/
     image: app-react:latest
     environment:
-      APP_REACT_HOST: ${APP_REACT_HOST}
-      APP_REACT_PORT: ${APP_REACT_PORT}
+      HOST: ${APP_REACT_HOST}
+      PORT: ${APP_REACT_PORT}
     working_dir: /app
     volumes:
+      - app_react-node_modules:/app/node_modules
       - ./src/app/react:/app
     ports:
       - ${APP_REACT_PORT}:${APP_REACT_PORT}
-    command: bash -c "sleep 3600"
+    command: bash -c "yarn install; npm run start"
 
 volumes:
   api_node-node_modules:
