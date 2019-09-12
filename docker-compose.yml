@@ -39,7 +39,7 @@ services:
     environment:
       HOST: ${APP_REACT_HOST}
       PORT: ${APP_REACT_PORT}
-      REACT_APP_API_URL: http://${API_HOST}:${API_NODE_PORT}
+      REACT_APP_API_URL: http://${API_NODE_HOST}:${API_NODE_PORT}
     working_dir: /app
     volumes:
       - app_react-node_modules:/app/node_modules
