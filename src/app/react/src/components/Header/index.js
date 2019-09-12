@@ -1,5 +1,5 @@
 import React from 'react'
-import './styles.css'
+import './styles.scss'
 
 const Header = () => <header id="main-header">Contacts</header>
 

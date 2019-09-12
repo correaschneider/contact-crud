@@ -1,7 +1,9 @@
+@import './../../variables.scss';
+
 #main-header {
     width: 100%;
     height: 60px;
-    background: #da552f;
+    background: $primaryColor;
     font-size: 18px;
     font-weight: bold;
     color: #fff;
