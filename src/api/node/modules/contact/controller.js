@@ -2,13 +2,21 @@ const ContactModel = require('./model')
 
 const Contact = {
     find: async (req, res, next) => {
-        let contacts = await ContactModel.find((err, contacts) => {
+        let filter = req.query.name ? {name: new RegExp(req.query.name, 'ig') } : {}
+        let page = parseInt(req.query.page || 1)
+        let limit = parseInt(req.query.limit || 10)
+        
+        let data = await ContactModel.find(filter, null, {skip: (limit * page) - limit, limit}, (err, data) => {
             if (err) console.log(err)
 
-            return contacts
+            return data
         })
 
-        res.json(contacts)
+        let total = await ContactModel.count(filter)
+        let pages = Math.ceil(total / limit)
+        let count = data.length
+
+        return res.send({ total, page, limit, pages, count, data })
     },
 
     get: async (req, res, next) => {
@@ -18,13 +26,14 @@ const Contact = {
             return contact
         })
 
-        res.json(contact)
+        return res.json(contact)
     },
 
     post: async (req, res, next) => {
         let contact = new ContactModel(req.body)
 
-        res.json(await contact.save())
+        contact = await contact.save()
+        return res.json(contact)
     },
 
     put: async (req, res, next) => {
@@ -35,8 +44,9 @@ const Contact = {
         })
 
         contact = await Object.assign(contact, req.body)
-            
-        res.json(await contact.save())
+
+        contact = await contact.save()
+        return res.json(contact)
     },
 
     delete: async (req, res, next) => {
@@ -46,7 +56,7 @@ const Contact = {
             return contact
         })
 
-        res.json(contact)
+        return res.json(contact)
     }
 }
 
