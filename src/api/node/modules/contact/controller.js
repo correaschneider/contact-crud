@@ -2,21 +2,21 @@ const ContactModel = require('./model')
 
 const Contact = {
     find: async (req, res, next) => {
-        let filter = req.query.name ? {name: new RegExp(req.query.name, 'ig') } : {}
         let page = parseInt(req.query.page || 1)
         let limit = parseInt(req.query.limit || 10)
+        let filter = req.query.name ? {name: new RegExp(req.query.name, 'ig')} : {}
+        filter = {...filter, status: true}
         
-        let data = await ContactModel.find(filter, null, {skip: (limit * page) - limit, limit}, (err, data) => {
+        let docs = await ContactModel.find(filter, null, {skip: (limit * page) - limit, limit}, (err, docs) => {
             if (err) console.log(err)
 
-            return data
+            return docs
         })
 
         let total = await ContactModel.count(filter)
         let pages = Math.ceil(total / limit)
-        let count = data.length
 
-        return res.send({ total, page, limit, pages, count, data })
+        return res.send({ total, limit, pages, page, docs })
     },
 
     get: async (req, res, next) => {
