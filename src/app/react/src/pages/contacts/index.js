@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import api from '../../services/api'
+import { Link } from 'react-router-dom'
 
 import './style.css'
 
@@ -42,7 +43,7 @@ export default class Main extends Component {
     }
 
     render () {
-        const { contacts, pageInfo: {page, pages} } = this.state
+        let { contacts, pageInfo: {page, pages} } = this.state
 
         return (
             <div className="contact-list">
@@ -50,7 +51,7 @@ export default class Main extends Component {
                     <article key={contact._id}>
                         <strong>{contact.name}</strong>
 
-                        <a href="">Acessar</a>
+                        <Link to={`/contacts/${contact._id}`}>Acessar</Link>
                     </article>
                 ))}
 
