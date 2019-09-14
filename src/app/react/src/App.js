@@ -7,7 +7,9 @@ import Header from './components/Header'
 const App = () => (
   <div className="App">
     <Header />
-    <Routes />
+    <div id="content">
+      <Routes />
+    </div>
   </div>
 )
 

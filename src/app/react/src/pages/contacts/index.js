@@ -23,7 +23,7 @@ export default class Main extends Component {
     }
 
     prevPage = () => {
-        let { pageInfo: {page, pages} } = this.state
+        let { pageInfo: {page} } = this.state
 
         if (page === 1) return
 

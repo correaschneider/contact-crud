@@ -1,0 +1,26 @@
+@import './../../variables.scss';
+
+.componentInput {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    background: none;
+    border-width: 1px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-color: #ddd;
+    margin-bottom: 10px;
+ 
+    &.w25 {
+        width: 25%;
+    }
+    
+    &.w50 {
+        width: 50%;
+    }
+
+    &.w75 {
+        width: 75%;
+    }
+}
