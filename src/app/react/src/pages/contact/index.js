@@ -34,7 +34,7 @@ export default class Contact extends Component {
     
             if (_id && fieldName) {
                 prevState.contact[nodeName].map(node => {
-                    if (node._id == _id)
+                    if (node._id === _id)
                         node[fieldName] = value
                 })
 
@@ -49,7 +49,7 @@ export default class Contact extends Component {
 
     addPhone = () => {
         this.setState(prevState => {
-            prevState.contact.phones.push({_id: Math.floor(Date.now() / 1000), number: '', label: ''})
+            prevState.contact.phones.push({_id: Math.random().toString(36).substr(2, 9), number: '', label: ''})
 
             return { contact: prevState.contact }
         })
@@ -57,7 +57,7 @@ export default class Contact extends Component {
 
     addEmail = () => {
         this.setState(prevState => {
-            prevState.contact.emails.push({_id: Math.floor(Date.now() / 1000), email: '', label: ''})
+            prevState.contact.emails.push({_id: Math.random().toString(36).substr(2, 9), email: '', label: ''})
 
             return { contact: prevState.contact }
         })
@@ -65,7 +65,7 @@ export default class Contact extends Component {
 
     addAddress = () => {
         this.setState(prevState => {
-            prevState.contact.address.push({_id: Math.floor(Date.now() / 1000), street: '', number: '', complement: '', district: '', city: '', state: '', country: ''})
+            prevState.contact.address.push({_id: Math.random().toString(36).substr(2, 9), street: '', number: '', complement: '', district: '', city: '', state: '', country: ''})
 
             return { contact: prevState.contact }
         })
